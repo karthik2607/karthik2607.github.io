@@ -1,14 +1,4 @@
-// Live Chennai time in the header
-(function () {
-  var el = document.getElementById('clock');
-  if (!el) return;
-  var fmt = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Kolkata' });
-  function tick() { el.textContent = fmt.format(new Date()); }
-  tick();
-  setInterval(tick, 15000);
-})();
-
-// Work index: one drawer open at a time
+// Work index: each row opens and closes on its own, so the page never jumps
 (function () {
   var heads = Array.prototype.slice.call(document.querySelectorAll('.row-head'));
   function set(head, open) {
@@ -17,9 +7,7 @@
   }
   heads.forEach(function (head) {
     head.addEventListener('click', function () {
-      var willOpen = head.getAttribute('aria-expanded') !== 'true';
-      heads.forEach(function (h) { set(h, false); });
-      set(head, willOpen);
+      set(head, head.getAttribute('aria-expanded') !== 'true');
     });
   });
   if (heads[0]) set(heads[0], true);
